@@ -8,8 +8,17 @@ import java.net.Socket;
 
 public class NoobServer {
 
+    public static void main(String[] args) {
+        try {
+            NoobServer.startNoobServer();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+    }
+
     @SuppressWarnings("InfiniteLoopStatement")
-    public static void main(String[] args) throws IOException {
+    public static void startNoobServer() throws IOException {
         while (true) {
             try (ServerSocket serverSocket = new ServerSocket(8000)) {
                 Socket clientSocket = serverSocket.accept();
