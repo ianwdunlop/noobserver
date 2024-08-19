@@ -16,22 +16,13 @@
 
 package io.thetravellingbard.noob;
 
-public class NoobRoute {
-    private String route;
+/**
+ * Creates and starts a NoobServer
+ */
+public class RunServer {
 
-    public NoobRoute() {
-
-    }
-
-    public NoobRoute(String route) {
-        this.route = route;
-    }
-
-    public String getRoute() {
-        return this.route;
-    }
-
-    public void setRouteString(String route) {
-        this.route = route;
+    public static void main(String[] args) {
+        NoobServer noobServer = new NoobServer();
+        noobServer.startServer();
     }
 }
