@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.logging.*;
 
 /**
  * Reads the input from a client request and sends a response.
@@ -12,6 +14,7 @@ import java.net.Socket;
 class SocketConnectionTask implements Runnable {
 
     private final Socket clientSocket;
+    private static final Logger logger = Logger.getLogger("io.thetravellingbard.noob.SocketConnectionTask");
 
     SocketConnectionTask(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -50,7 +53,7 @@ class SocketConnectionTask implements Runnable {
         try {
             clientSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe(Arrays.toString(e.getStackTrace()));
         }
     }
 }
