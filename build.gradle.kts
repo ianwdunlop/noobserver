@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    application
 }
 
 group = "io.thetravellingbard"
@@ -17,3 +17,8 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+application {
+    mainClass = "io.thetravellingbard.noob.RunServer"
+}
+
