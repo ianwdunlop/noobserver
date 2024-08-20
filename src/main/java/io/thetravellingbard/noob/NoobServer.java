@@ -19,7 +19,6 @@ package io.thetravellingbard.noob;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,7 +29,7 @@ import java.util.concurrent.Executors;
 public class NoobServer implements Runnable{
 
     private final ExecutorService clientSocketThreadPool;
-    private List<NoobRoute> routes = null;
+    private NoobRouteRegistry registry = null;
     private ServerSocket serverSocket;
     private Boolean isRunning = false;
 
@@ -52,8 +51,8 @@ public class NoobServer implements Runnable{
      * Create a Thread pool to handle up to 5 requests at a time. Add the routes that
      * the server can process
      */
-    public NoobServer(List<NoobRoute> routes) {
-        this.routes = routes;
+    public NoobServer(NoobRouteRegistry routeRegistry) {
+        this.registry = routeRegistry;
         clientSocketThreadPool = Executors.newFixedThreadPool(5);
     }
 
@@ -69,7 +68,7 @@ public class NoobServer implements Runnable{
             serverSocket = new ServerSocket(8000);
             while (isRunning) {
                 Socket clientSocket = serverSocket.accept();
-                clientSocketThreadPool.submit(new SocketConnectionTask(clientSocket));
+                clientSocketThreadPool.submit(new SocketConnectionTask(clientSocket, this.registry));
             }
             clientSocketThreadPool.shutdown();
             serverSocket.close();

@@ -19,28 +19,61 @@ package io.thetravellingbard.noob;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NoobServerTest {
 
     @Test
     void testRequest() {
-        NoobRoute noobRequest = new NoobRoute("/a/page") {
+        NoobRoute noobRoute = new NoobRoute("/a/page") {
             @Override
             public String getHTML() {
                 return "";
             }
         };
-        assertEquals(noobRequest.getRoute(), "/a/page");
+        assertEquals(noobRoute.getRoute(), "/a/page");
     }
 
     @Test
     void testRouteHTML() {
-        NoobRoute noobRequest = new NoobRoute("/another/page") {
+        NoobRoute noobRoute = new NoobRoute("/another/page") {
             @Override
             public String getHTML() {
                 return "<html><head></head><body><p>A paragraph</p></body></html>";
             }
         };
-        assertEquals(noobRequest.getHTML(), "<html><head></head><body><p>A paragraph</p></body></html>");
+        assertEquals(noobRoute.getHTML(), "<html><head></head><body><p>A paragraph</p></body></html>");
+    }
+
+    @Test
+    void testRegistry() {
+        NoobRoute noobRoute = new NoobRoute("/a/page") {
+            @Override
+            public String getHTML() {
+                return "<html><head></head><body><p>A page</p></body></html>";
+            }
+        };
+        NoobRoute noobRoute2 = new NoobRoute("/another/page") {
+            @Override
+            public String getHTML() {
+                return "<html><head></head><body><p>Another page</p></body></html>";
+            }
+        };
+        NoobRoute noobRoute3 = new NoobRoute("/yet/another/page") {
+            @Override
+            public String getHTML() {
+                return "<html><head></head><body><p>Yet another page</p></body></html>";
+            }
+        };
+        NoobRouteRegistry noobRouteRegistry = NoobRouteRegistry.getRouteRegistry();
+        noobRouteRegistry.addRoute(noobRoute);
+        noobRouteRegistry.addRoute(noobRoute2);
+        noobRouteRegistry.addRoute(noobRoute3);
+        assertTrue(noobRouteRegistry.getRoutes().containsKey("/a/page"));
+        assertTrue(noobRouteRegistry.getRoutes().containsKey("/another/page"));
+        assertTrue(noobRouteRegistry.getRoutes().containsKey("/yet/another/page"));
+        assertEquals(noobRouteRegistry.getRoutes().get("/a/page"), noobRoute);
+        assertEquals(noobRouteRegistry.getRoutes().get("/another/page"), noobRoute2);
+        assertEquals(noobRouteRegistry.getRoutes().get("/yet/another/page"), noobRoute3);
     }
 }

@@ -31,9 +31,11 @@ class SocketConnectionTask implements Runnable {
 
     private final Socket clientSocket;
     private static final Logger logger = Logger.getLogger("io.thetravellingbard.noob.SocketConnectionTask");
+    private final NoobRouteRegistry registry;
 
-    SocketConnectionTask(Socket clientSocket) {
+    SocketConnectionTask(Socket clientSocket, NoobRouteRegistry registry) {
         this.clientSocket = clientSocket;
+        this.registry = registry;
     }
 
     /**
