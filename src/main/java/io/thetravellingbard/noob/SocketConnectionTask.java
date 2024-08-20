@@ -21,8 +21,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.*;
+import java.util.stream.Collectors;
 
 /**
  * Reads the input from a client request and sends a response.
@@ -44,6 +47,7 @@ class SocketConnectionTask implements Runnable {
      */
     @Override
     public void run() {
+        ArrayList<String> requestParams = new ArrayList<String>();
         BufferedReader inputReader = null;
         try {
             inputReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -57,14 +61,24 @@ class SocketConnectionTask implements Runnable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            requestParams.add(inputString);
             System.out.println(inputString);
             if (inputString.isEmpty()) {
                 break;
             }
         }
+        List<String> matches = requestParams.stream().filter(it -> it.contains("GET")).collect(Collectors.toList());
+        String requestRoute = matches.get(0).replace("GET", "").replace("HTTP/1.1", "").trim();
+//        NoobRoute route = registry.getRoutes().get(requestRoute);
+        OutputStream outputStream = null;
         try {
-            OutputStream outputStream = clientSocket.getOutputStream();
-            outputStream.write(("HTTP/1.1 200 OK\n\nHello from the Noob").getBytes());
+            if (!registry.getRoutes().isEmpty() && registry.getRoutes().containsKey(requestRoute)) {
+                outputStream = clientSocket.getOutputStream();
+                outputStream.write(("HTTP/1.1 200 OK\n\nHello from the Noob").getBytes());
+            } else {
+                outputStream = clientSocket.getOutputStream();
+                outputStream.write(("HTTP/1.1 404 OK\n\n404 Could not find the requested path on the server").getBytes());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

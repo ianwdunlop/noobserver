@@ -22,7 +22,14 @@ package io.thetravellingbard.noob;
 public class RunServer {
 
     public static void main(String[] args) {
-        NoobServer noobServer = new NoobServer();
+        NoobRoute homeRoute = new NoobRoute("/") {
+            @Override
+            public String getHTML() {
+                return "Hello from your home page";
+            }
+        };
+        NoobRouteRegistry.getRouteRegistry().addRoute(homeRoute);
+        NoobServer noobServer = new NoobServer(NoobRouteRegistry.getRouteRegistry());
         noobServer.startServer();
     }
 }
