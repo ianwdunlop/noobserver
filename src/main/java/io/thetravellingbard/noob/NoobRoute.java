@@ -16,12 +16,8 @@
 
 package io.thetravellingbard.noob;
 
-public class NoobRoute {
-    private String route;
-
-    public NoobRoute() {
-
-    }
+public abstract class NoobRoute {
+    private final String route;
 
     public NoobRoute(String route) {
         this.route = route;
@@ -31,7 +27,5 @@ public class NoobRoute {
         return this.route;
     }
 
-    public void setRouteString(String route) {
-        this.route = route;
-    }
+    public abstract String getHTML();
 }

@@ -24,7 +24,23 @@ public class NoobServerTest {
 
     @Test
     void testRequest() {
-        NoobRoute noobRequest = new NoobRoute("/home/a/page");
-        assertEquals(noobRequest.getRoute(), "/home/a/page");
+        NoobRoute noobRequest = new NoobRoute("/a/page") {
+            @Override
+            public String getHTML() {
+                return "";
+            }
+        };
+        assertEquals(noobRequest.getRoute(), "/a/page");
+    }
+
+    @Test
+    void testRouteHTML() {
+        NoobRoute noobRequest = new NoobRoute("/another/page") {
+            @Override
+            public String getHTML() {
+                return "<html><head></head><body><p>A paragraph</p></body></html>";
+            }
+        };
+        assertEquals(noobRequest.getHTML(), "<html><head></head><body><p>A paragraph</p></body></html>");
     }
 }
