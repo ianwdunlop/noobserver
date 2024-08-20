@@ -69,14 +69,12 @@ class SocketConnectionTask implements Runnable {
         }
         List<String> matches = requestParams.stream().filter(it -> it.contains("GET")).collect(Collectors.toList());
         String requestRoute = matches.get(0).replace("GET", "").replace("HTTP/1.1", "").trim();
-//        NoobRoute route = registry.getRoutes().get(requestRoute);
-        OutputStream outputStream = null;
         try {
+        OutputStream outputStream = clientSocket.getOutputStream();
             if (!registry.getRoutes().isEmpty() && registry.getRoutes().containsKey(requestRoute)) {
-                outputStream = clientSocket.getOutputStream();
-                outputStream.write(("HTTP/1.1 200 OK\n\nHello from the Noob").getBytes());
+                String requestedPage = registry.getRoutes().get(requestRoute).getHTML();
+                outputStream.write(("HTTP/1.1 200 OK\n\n" + requestedPage).getBytes());
             } else {
-                outputStream = clientSocket.getOutputStream();
                 outputStream.write(("HTTP/1.1 404 OK\n\n404 Could not find the requested path on the server").getBytes());
             }
         } catch (IOException e) {
