@@ -28,7 +28,14 @@ public class RunServer {
                 return "Hello from your home page";
             }
         };
+        NoobRoute infoRoute = new NoobRoute("/info") {
+            @Override
+            public String getHTML() {
+                return "This page contains some info";
+            }
+        };
         NoobRouteRegistry.getRouteRegistry().addRoute(homeRoute);
+        NoobRouteRegistry.getRouteRegistry().addRoute(infoRoute);
         NoobServer noobServer = new NoobServer(NoobRouteRegistry.getRouteRegistry());
         noobServer.startServer();
     }
