@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
  * A simple webserver that listens on port 8000 using a ServerSocket
  * and uses a thread pool to handle socket requests.
  */
-public class NoobServer implements Runnable{
+public class NoobServer implements Runnable {
 
     private final ExecutorService clientSocketThreadPool;
     private NoobRouteRegistry registry = null;
@@ -36,8 +36,9 @@ public class NoobServer implements Runnable{
     /**
      * Start the server in a new thread
      */
-    public void startServer() {
+    public NoobServer startServer() {
         new Thread(this).start();
+        return this;
     }
 
     /**
@@ -66,7 +67,7 @@ public class NoobServer implements Runnable{
         isRunning = true;
         try {
             serverSocket = new ServerSocket(8000);
-            while (isRunning) {
+            while (isServerRunning()) {
                 Socket clientSocket = serverSocket.accept();
                 clientSocketThreadPool.submit(new SocketConnectionTask(clientSocket, this.registry));
             }
@@ -81,7 +82,11 @@ public class NoobServer implements Runnable{
         return serverSocket;
     }
 
-    public void stop() {
+    public void stop() throws IOException {
         isRunning = false;
+    }
+
+    public Boolean isServerRunning() {
+        return isRunning;
     }
 }

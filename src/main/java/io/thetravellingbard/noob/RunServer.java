@@ -16,6 +16,8 @@
 
 package io.thetravellingbard.noob;
 
+import java.io.IOException;
+
 /**
  * Creates and starts a NoobServer
  */
