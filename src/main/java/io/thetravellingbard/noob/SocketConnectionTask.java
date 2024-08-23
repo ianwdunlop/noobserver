@@ -48,31 +48,17 @@ class SocketConnectionTask implements Runnable {
     @Override
     public void run() {
         ArrayList<String> requestParams = new ArrayList<String>();
-        BufferedReader inputReader = null;
+        NoobRequest request;
         try {
-            inputReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            request = new NoobRequest(clientSocket.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String inputString;
-        while (true) {
-            try {
-                if ((inputString = inputReader.readLine()) == null) break;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            requestParams.add(inputString);
-            System.out.println(inputString);
-            if (inputString.isEmpty()) {
-                break;
-            }
-        }
-        List<String> matches = requestParams.stream().filter(it -> it.contains("GET")).collect(Collectors.toList());
-        String requestRoute = matches.get(0).replace("GET", "").replace("HTTP/1.1", "").trim();
+
         try {
         OutputStream outputStream = clientSocket.getOutputStream();
-            if (!registry.isEmpty() && registry.containsKey(requestRoute)) {
-                String requestedPage = registry.get(requestRoute).getHTML();
+            if (!registry.isEmpty() && registry.containsKey(request.requestPath) && registry.get(request.requestPath).allowsVerb(request.httpVerb)) {
+                String requestedPage = registry.get(request.requestPath).getHTML();
                 outputStream.write(("HTTP/1.1 200 OK\n\n" + requestedPage).getBytes());
             } else {
                 outputStream.write(("HTTP/1.1 404 OK\n\n404 Could not find the requested path on the server").getBytes());

@@ -18,8 +18,12 @@ package io.thetravellingbard.noob;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -95,5 +99,29 @@ public class NoobServerTest {
         noobRouteRegistry.put(noobRoute.getRoute(), noobRoute);
         assertTrue(noobRouteRegistry.get("/a/page").allowsVerb(HttpVerb.GET));
         assertTrue(noobRouteRegistry.get("/a/page").allowsVerb(HttpVerb.POST));
+    }
+
+    @Test
+    void testNoobRequest() throws IOException {
+        String requestDetails = "GET /info HTTP/1.1\n" +
+                "Host: localhost:8000\n" +
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0\n" +
+                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8\n" +
+                "Accept-Language: en-GB,en;q=0.5\n" +
+                "Accept-Encoding: gzip, deflate, br, zstd\n" +
+                "Connection: keep-alive\n" +
+                "Upgrade-Insecure-Requests: 1\n" +
+                "Sec-Fetch-Dest: document\n" +
+                "Sec-Fetch-Mode: navigate\n" +
+                "Sec-Fetch-Site: none\n" +
+                "Sec-Fetch-User: ?1\n" +
+                "Priority: u=0, i";
+        InputStream stream = new ByteArrayInputStream(requestDetails.getBytes(StandardCharsets.UTF_8));
+        NoobRequest noobRequest = new NoobRequest(stream);
+        stream.close();
+        assertEquals(noobRequest.httpVerb, HttpVerb.GET);
+        assertEquals(noobRequest.requestPath, "/info");
+        assertEquals(noobRequest.protocol, "HTTP/1.1");
+        assertEquals(String.join("\n", noobRequest.requestParams), requestDetails);
     }
 }
