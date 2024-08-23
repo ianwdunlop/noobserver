@@ -16,16 +16,49 @@
 
 package io.thetravellingbard.noob;
 
+import java.util.ArrayList;
+
+/**
+ * Defines an HTTP route that the server can respond to. Each route contains
+ * a path eg '/a/path', the HTML that it can return and the type of HTTP request it can respond to
+ * eg GET, POST
+ */
 public abstract class NoobRoute {
     private final String route;
+    private final ArrayList<HttpVerb> httpVerbs;
 
+    /**
+     * A route handles GET requests by default
+     * @param route String
+     */
     public NoobRoute(String route) {
         this.route = route;
+        ArrayList<HttpVerb> defaultHttpVerb = new ArrayList<HttpVerb>();
+        defaultHttpVerb.add(HttpVerb.GET);
+        this.httpVerbs = defaultHttpVerb;
+    }
+
+    public NoobRoute(String route, ArrayList<HttpVerb> httpVerbs) {
+        this.route = route;
+        this.httpVerbs = httpVerbs;
     }
 
     public String getRoute() {
         return this.route;
     }
 
+    /**
+     * Can the route handle this type of HTTP request
+     * @param httpVerb The HTTP verb that the request is using
+     * @return Boolean
+     */
+    public Boolean allowsVerb(HttpVerb httpVerb) {
+        return httpVerbs.contains(httpVerb);
+    }
+
+    /**
+     * the HTML that the route will return
+     * @return String
+     */
     public abstract String getHTML();
 }

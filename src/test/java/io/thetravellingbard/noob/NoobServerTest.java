@@ -18,6 +18,9 @@ package io.thetravellingbard.noob;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -75,5 +78,22 @@ public class NoobServerTest {
         assertEquals(noobRouteRegistry.get("/a/page"), noobRoute);
         assertEquals(noobRouteRegistry.get("/another/page"), noobRoute2);
         assertEquals(noobRouteRegistry.get("/yet/another/page"), noobRoute3);
+    }
+
+    @Test
+    void testHttpVerbs() {
+        ArrayList<HttpVerb> httpVerbs = new ArrayList<HttpVerb>();
+        httpVerbs.add(HttpVerb.GET);
+        httpVerbs.add(HttpVerb.POST);
+        NoobRoute noobRoute = new NoobRoute("/a/page", httpVerbs) {
+            @Override
+            public String getHTML() {
+                return "<html><head></head><body><p>A page</p></body></html>";
+            }
+        };
+        NoobRouteRegistry noobRouteRegistry = NoobRouteRegistry.getRouteRegistry();
+        noobRouteRegistry.put(noobRoute.getRoute(), noobRoute);
+        assertTrue(noobRouteRegistry.get("/a/page").allowsVerb(HttpVerb.GET));
+        assertTrue(noobRouteRegistry.get("/a/page").allowsVerb(HttpVerb.POST));
     }
 }
