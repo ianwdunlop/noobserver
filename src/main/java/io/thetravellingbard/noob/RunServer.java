@@ -36,8 +36,8 @@ public class RunServer {
                 return "This page contains some info";
             }
         };
-        NoobRouteRegistry.getRouteRegistry().addRoute(homeRoute);
-        NoobRouteRegistry.getRouteRegistry().addRoute(infoRoute);
+        NoobRouteRegistry.getRouteRegistry().put(homeRoute.getRoute(), homeRoute);
+        NoobRouteRegistry.getRouteRegistry().put(infoRoute.getRoute(), infoRoute);
         NoobServer noobServer = new NoobServer(NoobRouteRegistry.getRouteRegistry());
         noobServer.startServer();
     }

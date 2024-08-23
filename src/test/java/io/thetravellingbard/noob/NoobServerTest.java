@@ -66,14 +66,14 @@ public class NoobServerTest {
             }
         };
         NoobRouteRegistry noobRouteRegistry = NoobRouteRegistry.getRouteRegistry();
-        noobRouteRegistry.addRoute(noobRoute);
-        noobRouteRegistry.addRoute(noobRoute2);
-        noobRouteRegistry.addRoute(noobRoute3);
-        assertTrue(noobRouteRegistry.getRoutes().containsKey("/a/page"));
-        assertTrue(noobRouteRegistry.getRoutes().containsKey("/another/page"));
-        assertTrue(noobRouteRegistry.getRoutes().containsKey("/yet/another/page"));
-        assertEquals(noobRouteRegistry.getRoutes().get("/a/page"), noobRoute);
-        assertEquals(noobRouteRegistry.getRoutes().get("/another/page"), noobRoute2);
-        assertEquals(noobRouteRegistry.getRoutes().get("/yet/another/page"), noobRoute3);
+        noobRouteRegistry.put(noobRoute.getRoute(), noobRoute);
+        noobRouteRegistry.put(noobRoute2.getRoute(), noobRoute2);
+        noobRouteRegistry.put(noobRoute3.getRoute(), noobRoute3);
+        assertTrue(noobRouteRegistry.containsKey("/a/page"));
+        assertTrue(noobRouteRegistry.containsKey("/another/page"));
+        assertTrue(noobRouteRegistry.containsKey("/yet/another/page"));
+        assertEquals(noobRouteRegistry.get("/a/page"), noobRoute);
+        assertEquals(noobRouteRegistry.get("/another/page"), noobRoute2);
+        assertEquals(noobRouteRegistry.get("/yet/another/page"), noobRoute3);
     }
 }

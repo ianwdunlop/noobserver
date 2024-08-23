@@ -19,13 +19,12 @@ package io.thetravellingbard.noob;
 import java.util.HashMap;
 
 /**
- * Contains all the different routes that the server can route to
+ * Contains all the different routes that the server can route to.
+ * the route path is the key and the NoobRoute is the value
  */
-public class NoobRouteRegistry {
+public class NoobRouteRegistry extends HashMap<String, NoobRoute> {
 
     private static NoobRouteRegistry routeRegistry = null;
-
-    private HashMap<String, NoobRoute> routes = new HashMap<String, NoobRoute>();
 
     /**
      * Private constructor so we only create one instance
@@ -45,20 +44,4 @@ public class NoobRouteRegistry {
         return routeRegistry;
     }
 
-    /**
-     * Add a route to the registry
-     * @param route NoobRoute
-     */
-    public void addRoute(NoobRoute route) {
-        routes.put(route.getRoute(), route);
-    }
-
-    /**
-     * Get all of the routes that the registry contains.
-     * The key is the route path and the value the actual NoobRoute
-     * @return routes
-     */
-    public HashMap<String, NoobRoute> getRoutes() {
-        return routes;
-    }
 }
