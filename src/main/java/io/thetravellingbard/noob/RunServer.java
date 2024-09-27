@@ -16,8 +16,8 @@
 
 package io.thetravellingbard.noob;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Creates and starts a NoobServer
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class RunServer {
 
     public static void main(String[] args) {
-        ArrayList<HttpVerb> allowedHttpVerbsForHome = new ArrayList<HttpVerb>();
+        List<HttpVerb> allowedHttpVerbsForHome = new ArrayList<>();
         allowedHttpVerbsForHome.add(HttpVerb.GET);
         NoobRoute homeRoute = new NoobRoute("/", allowedHttpVerbsForHome) {
             @Override
@@ -33,7 +33,7 @@ public class RunServer {
                 return "Hello from your home page";
             }
         };
-        ArrayList<HttpVerb> allowedHttpVerbsForInfo = new ArrayList<HttpVerb>();
+        List<HttpVerb> allowedHttpVerbsForInfo = new ArrayList<>();
         allowedHttpVerbsForInfo.add(HttpVerb.GET);
         NoobRoute infoRoute = new NoobRoute("/info", allowedHttpVerbsForInfo) {
             @Override

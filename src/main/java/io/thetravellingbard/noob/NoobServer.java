@@ -36,16 +36,8 @@ public class NoobServer implements Runnable {
     /**
      * Start the server in a new thread
      */
-    public NoobServer startServer() {
+    public void startServer() {
         new Thread(this).start();
-        return this;
-    }
-
-    /**
-     * Create a Thread pool to handle up to 5 requests at a time
-     */
-    public NoobServer() {
-        clientSocketThreadPool = Executors.newFixedThreadPool(5);
     }
 
     /**

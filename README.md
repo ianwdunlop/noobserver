@@ -9,7 +9,9 @@ that ship with Java.
 ### The What?
 A very simple Java Socket based WebServer. Runs on port 8000. When it receives a request from a client
 it reads the request from the input stream and sends a simple response back. Uses a thread pool and processes
-each request on its own thread. Built on JDK 11. It's a 'new' server ie 'Noob' server. Terrible, I know.
+each request on its own thread. It's sort of a strange mash of server and framework since you can add routes which
+can return some HTML.  
+Built on JDK 11. It's a 'new' server ie 'Noob' server. Terrible, I know.
 
 ### The When?
 It's a work in progress. I'm doing it for fun and re-education. Is anything every finished. It's not recommended

@@ -17,6 +17,7 @@
 package io.thetravellingbard.noob;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Defines an HTTP route that the server can respond to. Each route contains
@@ -25,7 +26,7 @@ import java.util.ArrayList;
  */
 public abstract class NoobRoute {
     private final String route;
-    private final ArrayList<HttpVerb> httpVerbs;
+    private final List<HttpVerb> httpVerbs;
 
     /**
      * A route handles GET requests by default
@@ -38,7 +39,7 @@ public abstract class NoobRoute {
         this.httpVerbs = defaultHttpVerb;
     }
 
-    public NoobRoute(String route, ArrayList<HttpVerb> httpVerbs) {
+    public NoobRoute(String route, List<HttpVerb> httpVerbs) {
         this.route = route;
         this.httpVerbs = httpVerbs;
     }

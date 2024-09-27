@@ -21,13 +21,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class NoobRequest {
 
     private static final Logger logger = Logger.getLogger("io.thetravellingbard.noob.NoobRequest");
 
-    ArrayList<String> requestParams = new ArrayList<String>();
+    List<String> requestParams = new ArrayList<>();
     HttpVerb httpVerb;
     String requestPath;
     String protocol;

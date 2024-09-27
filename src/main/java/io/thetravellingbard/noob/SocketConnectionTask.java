@@ -16,16 +16,12 @@
 
 package io.thetravellingbard.noob;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.logging.*;
-import java.util.stream.Collectors;
+import java.util.logging.Logger;
 
 /**
  * Reads the input from a client request and sends a response.
