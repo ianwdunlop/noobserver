@@ -70,11 +70,11 @@ public class NoobServer implements Runnable {
         }
     }
 
-    public ServerSocket getServerSocket() {
-        return serverSocket;
-    }
-
-    public void stop() throws IOException {
+    /**
+     * Stop the server by setting the isRunning var to false
+     * which will cause the threadpool to shut down
+     */
+    public void stop() {
         isRunning = false;
     }
 
